@@ -4,7 +4,7 @@
 //              properties: scale and align.
 // Copyright:   ©2012-2013 Nicolas BADIA
 // License:     Licensed under the MIT license (see LICENCE)
-// Version:     1.0.0
+// Version:     1.1.0
 // ==========================================================================
 
 !function($) {
@@ -20,12 +20,15 @@
           data = $this.data('imageScale');
           
       if (!data) {
-        var options = $.extend({}, $.fn.imageScale.defaults, typeof option == 'object' && option),
+        $this.css('opacity', 0);
+
+        var didLoad = $this[0].complete,
+            options = $.extend({}, $.fn.imageScale.defaults, typeof option == 'object' && option),
 
             loadFunc = function() {
               $this.data('imageScale', (data = new ImageScale(this, options)));
 
-              if (options.updateOnResize) {
+              if (options.rescaleOnResize) {
                 if (!window.requestAnimationFrame) {
                   $(window).resize(function(e) { data.scale(); });
                 }
@@ -34,11 +37,13 @@
               data.scale(true);
             };
 
-        if ($this[0].complete) {
+        if (didLoad) {
           loadFunc.apply($this[0]);
         }
-        else $this.load(loadFunc);
-      } 
+        else {
+          $this.load(loadFunc);
+        }
+      }
       else {
         data.scale();
       }
@@ -47,35 +52,50 @@
 
   $.fn.imageScale.defaults = {
     /**
-      Set to true if the dimension of the container can change when 
-      the window is resize. This way, the image will be automatically update.
-      
-      @type Boolean
-      @default true
-      @since Version 1.0
-    */
-    updateOnResize: true,
-
-    /**
-      Set to true to hide the image overflow.
-
-      @type Boolean
-      @default true
-      @since Version 1.0
-    */
-    hideOverflow: true,
-
-    /**
-      If null, the container of the image will be use.
+      A jQuery Object against which the image size will be calculated.
+      If null, the parent of the image will be used.
 
       @type jQuery Object
       @default null
       @since Version 1.0
     */
-    container: null,
+    parent: null,
 
     /**
-      Debug level
+      A boolean determining if the parent should hide its overflow.
+
+      @type Boolean
+      @default true
+      @since Version 1.0
+    */
+    hideParentOverflow: true,
+
+    /**
+      A duration in milliseconds determining how long the fadeIn animation 
+      will run when your image is scale for the firstTime.
+
+      Set it to 0 if you don't want any animation.
+
+      @type Number or String
+      @default 0
+      @since Version 1.1
+    */
+    fadeInDuration: 0,
+
+    /**
+      A boolean indicating if the image size should be rescaled when 
+      the window is resized. 
+
+      The window size is checked using requestAnimationFrame for good performance.
+      
+      @type Boolean
+      @default true
+      @since Version 1.0
+    */
+    rescaleOnResize: true,
+
+    /**
+      A number indicating the debug level :
 
       1: error
       2: error & warning
@@ -92,14 +112,14 @@
   // IMAGE SCALE PUBLIC CLASS DEFINITION
   //
 
-  var ImageScale = function(element, options) {
+  var ImageScale = function(element, options) { 
     this.options = options;
     var $element = this.$element = $(element);
 
     this.elementWidth = $element.attr('width') || element.width;
     this.elementHeight = $element.attr('height') || element.height;
 
-    this.$parent = options.container?options.container:$($(element).parent()[0]);
+    this.$parent = options.parent?options.parent:$($(element).parent()[0]);
   }
 
   $.fn.imageScale.Constructor = ImageScale;
@@ -152,7 +172,7 @@
 
       if (this._cacheDestWidth === destWidth && this._cacheDestHeight === destHeight) {
         if (options.debug > 2) {
-          console.log("imageScale - DEBUG NOTICE: The container size didn't change.", destWidth, destHeight);
+          console.log("imageScale - DEBUG NOTICE: The parent size didn't change.", destWidth, destHeight);
         }
       }
 
@@ -180,7 +200,12 @@
 
       $element.css({ position: 'absolute', top: layout.y+'px', left: layout.x+'px', width: layout.width+'px', height: layout.height+'px', 'max-width': 'none' });
 
-      if (options.hideOverflow) {
+      if (firstTime) {
+        $element.css({ display: 'none', opacity: 1 });
+        $element.fadeIn(options.fadeInDuration);
+      }
+
+      if (options.hideParentOverflow) {
         $parent.css({ overflow: 'hidden' });
       }
     },
@@ -286,21 +311,21 @@
     },
 
     /**
-      Determine if the windows width has changed since the last update
+      Determine if the windows size has changed since the last update.
 
       @returns {Boolean}
     */
     needUpdate: function() {
-      var width = $(window).width();
+      var size = $(window).height() + ' ' + $(window).width();
 
-      if (this.lastUpdateWidth !== width) {
-        this.lastUpdateWidth = width;
+      if (this.lastWindowSize !== size) {
+        this.lastWindowSize = size;
         return true;
       }
       return false;
     },
 
     /** @private */
-    lastUpdateWidth: null
+    lastWindowSize: null
   }
 }(window.jQuery);

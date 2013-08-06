@@ -5,7 +5,6 @@ Image Scale
 
 *This plugin is greatly inspired from Sproutcore SC.ImageView.*
 
-
 ## Usage ##
 
 image-scale depends on jQuery. To use it, include this in your page :
@@ -30,32 +29,44 @@ You're done.
 
 ## Options ##
 
-####updateOnResize####
+####parent####
 
-Set to true if the dimension of the container can change when the window is resize. This way, the image will be automatically update.
+A jQuery Object against which the image size will be calculated.
+If null, the parent of the image will be used.
       
-    Type: Boolean
-    Default: true
-
-
-####hideOverflow####
-
-Set to true to hide the image overflow.
-
-    Type: Boolean
-    Default: true
-
-####container####
-
-If null, the container of the image will be use.
-
     Type: jQuery Object
     Default: null
+
+####hideParentOverflow####
+
+A boolean determining if the parent should hide its overflow.
+
+    Type: Boolean
+    Default: true
+
+####fadeInDuration####
+
+A duration in milliseconds determining how long the fadeIn animation 
+will run when your image is scale for the firstTime.
+
+Set it to 0 if you don't want any animation.
+
+    Type: Number or String
+    Default: 0
+
+####rescaleOnResize####
+
+A boolean indicating if the image size should be rescaled when the window is resized. 
+
+The window size is checked using requestAnimationFrame for good performance.
+
+    Type: Boolean
+    Default: true
   
 
 ####debug####
 
-Debug level
+A number indicating the debug level :
 
 1. error
 2. error & warning
@@ -94,4 +105,15 @@ Debug level
 
 ## Demo ##
 
-Check out the Sproutcore [Automatic Image Scaling demo](http://showcase.sproutcore.com/#demos/Automatic%20Image%20Scaling) to understand the difference between all the different options.
+See it in action on our [home page](https://www.gestixi.com). Our logo use it extensively.
+
+
+You can also check out the Sproutcore [Automatic Image Scaling demo](http://showcase.sproutcore.com/#demos/Automatic%20Image%20Scaling) to understand the difference between all the different options.
+
+
+## Size ##
+
+Original Size:  2.45KB gzipped (7.5KB uncompressed)
+
+Compiled Size:  **1.33KB gzipped** (3.14KB uncompressed)
+
