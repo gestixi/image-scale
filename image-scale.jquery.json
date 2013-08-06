@@ -1,0 +1,36 @@
+{
+  "name": "image-scale",
+  "title": "Image Scale",
+  "description": "Scale images to fit or fill any target container via two simple properties: scale and align.",
+  "keywords": [
+    "jquery",
+    "image",
+    "picture",
+    "scale",
+    "responsive",
+    "resize"
+  ],
+  "version": "1.0.0",
+  "author": {
+    "name": "GestiXi",
+    "url": "https://github.com/GestiXi"
+  },
+  "maintainers": [
+    {
+      "name": "Nicolas BADIA",
+      "url": "https://github.com/nicolasbadia"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/mit-license.php"
+    }
+  ],
+  "bugs": "https://github.com/GestiXi/image-scale/issues",
+  "homepage": "https://github.com/GestiXi/image-scale",
+  "docs": "https://github.com/GestiXi/image-scale",
+  "dependencies": {
+    "jquery": ">=1.4"
+  }
+}
