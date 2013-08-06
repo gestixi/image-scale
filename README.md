@@ -12,13 +12,15 @@ image-scale depends on jQuery. To use it, include this in your page :
     <script src="jquery.js" type="text/javascript"></script>
     <script src="image-scale.js" type="text/javascript"></script>
 
-Set the `data-scale` and `data-align` attributes to the images that you want to scale:
+If you want to identify the images that you want to scale, you can add a class to them. In this example we are adding a class call `scale`.
+
+You can also set the `data-scale` and `data-align` attributes directly to the images if you want to override the default setting.
 
     <div class="image-container">
-      <img class="scale" data-scale="best-fit" data-align="center" src="img/example.jpg">
+      <img class="scale" data-scale="best-fit-down" data-align="center" src="img/example.jpg">
     </div>
 
-Then add this JavaScript code to your page :
+Now add this JavaScript code to your page :
 
     $(function() {
       $("img.scale").imageScale();
@@ -27,7 +29,45 @@ Then add this JavaScript code to your page :
 You're done.
 
 
-## Options ##
+##Properties##
+
+
+####scale####
+
+Determines how the image will scale to fit within its containing space. Possible values:
+
+* **fill** - stretches or compresses the source image to fill the target frame
+* **best-fill** - fits the shortest side of the source image within the target frame while maintaining the original aspect ratio
+* **best-fit** - fits the longest edge of the source image within the target frame while maintaining the original aspect ratio
+* **best-fit-down** - same as *best-fit* but will not stretch the source if it is smaller than the target
+* **none** - the source image is left unscaled
+
+<!-- -->
+
+    Type: String
+    Default: best-fill
+
+
+
+####align####
+
+Align the image within its frame. Possible values:
+
+* **left**
+* **right**
+* **center**
+* **top**
+* **bottom**
+* **top-left**
+* **top-right**
+* **bottom-left**
+* **bottom-right**
+
+<!-- -->
+      
+    Type: String
+    Default: center
+
 
 ####parent####
 
@@ -78,34 +118,10 @@ A number indicating the debug level :
     Default: 0
 
 
-## Properties ##
-
-####Possible `scale` values are:####
-
-* **fill** - stretches or compresses the source image to fill the target frame
-* **best-fill** - fits the shortest side of the source image within the target frame while maintaining the original aspect ratio
-* **best-fit** - fits the longest edge of the source image within the target frame while maintaining the original aspect ratio
-* **best-fit-down** - same as *best-fit* but will not stretch the source if it is smaller than the target
-* **none** - the source image is left unscaled
-
-
-####Possible `align` values are:####
-
-* **left**
-* **right**
-* **center**
-* **top**
-* **bottom**
-* **top-left**
-* **top-right**
-* **bottom-left**
-* **bottom-right**
-
-
 
 ## Demo ##
 
-See it in action on our [home page](https://www.gestixi.com). Our logo use it extensively.
+See it in action on our [home page](https://www.gestixi.com).
 
 
 You can also check out the Sproutcore [Automatic Image Scaling demo](http://showcase.sproutcore.com/#demos/Automatic%20Image%20Scaling) to understand the difference between all the different options.
@@ -113,7 +129,7 @@ You can also check out the Sproutcore [Automatic Image Scaling demo](http://show
 
 ## Size ##
 
-Original Size:  2.45KB gzipped (7.5KB uncompressed)
+Original Size:  2.75KB gzipped (8.58KB uncompressed)
 
-Compiled Size:  **1.33KB gzipped** (3.14KB uncompressed)
+Compiled Size:  **1.39KB gzipped** (3.35KB uncompressed)
 

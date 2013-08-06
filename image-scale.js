@@ -1,10 +1,9 @@
 // ==========================================================================
-// Project:     image-scale
-// Description: Scale images to fit or fill any target size via two simple 
-//              properties: scale and align.
+// Project:     Image Scale
+// Description: Scale images to fit or fill any target size via two simple properties: scale and align.
 // Copyright:   ©2012-2013 Nicolas BADIA
 // License:     Licensed under the MIT license (see LICENCE)
-// Version:     1.1.0
+// Version:     1.2.0
 // ==========================================================================
 
 !function($) {
@@ -52,6 +51,40 @@
 
   $.fn.imageScale.defaults = {
     /**
+      Determines how the image will scale to fit within its containing space. Possible values:
+
+      * **fill** - stretches or compresses the source image to fill the target frame
+      * **best-fill** - fits the shortest side of the source image within the target frame while maintaining the original aspect ratio
+      * **best-fit** - fits the longest edge of the source image within the target frame while maintaining the original aspect ratio
+      * **best-fit-down** - same as *best-fit* but will not stretch the source if it is smaller than the target
+      * **none** - the source image is left unscaled
+
+      @type String
+      @default best-fill
+      @since Version 1.2
+    */
+    scale: 'best-fill',
+
+    /**
+      Align the image within its frame. Possible values:
+
+      * **left**
+      * **right**
+      * **center**
+      * **top**
+      * **bottom**
+      * **top-left**
+      * **top-right**
+      * **bottom-left**
+      * **bottom-right**
+
+      @type String
+      @default center
+      @since Version 1.2
+    */
+    align: 'center',
+
+    /**
       A jQuery Object against which the image size will be calculated.
       If null, the parent of the image will be used.
 
@@ -71,8 +104,7 @@
     hideParentOverflow: true,
 
     /**
-      A duration in milliseconds determining how long the fadeIn animation 
-      will run when your image is scale for the firstTime.
+      A duration in milliseconds determining how long the fadeIn animation will run when your image is scale for the firstTime.
 
       Set it to 0 if you don't want any animation.
 
@@ -83,8 +115,7 @@
     fadeInDuration: 0,
 
     /**
-      A boolean indicating if the image size should be rescaled when 
-      the window is resized. 
+      A boolean indicating if the image size should be rescaled when the window is resized. 
 
       The window size is checked using requestAnimationFrame for good performance.
       
@@ -168,11 +199,24 @@
           destInnerHeight = $parent.innerHeight(),
 
           widthOffset = destWidth - destInnerWidth,
-          heightOffset = destHeight - destInnerHeight;
+          heightOffset = destHeight - destInnerHeight
+
+          scaleData = $element.attr('data-scale'),
+          alignData = $element.attr('data-align'),
+
+          scale = scaleData?scaleData:options.scale,
+          align = alignData?alignData:options.align;
+
+      if (!scale) {
+        if (options.debug > 2) {
+          console.log("imageScale - DEBUG NOTICE: The scale property is null.");
+        }
+        return;
+      }
 
       if (this._cacheDestWidth === destWidth && this._cacheDestHeight === destHeight) {
         if (options.debug > 2) {
-          console.log("imageScale - DEBUG NOTICE: The parent size didn't change.", destWidth, destHeight);
+          console.log("imageScale - DEBUG NOTICE: The parent size hasn't changed.", destWidth, destHeight);
         }
       }
 
@@ -183,17 +227,13 @@
         if (options.debug > 0) {
           console.error('imageScale - DEBUG ERROR: The dimensions are incorrect.', sourceWidth, sourceHeight, destWidth, destHeight);
         }
-
         return;
       }
 
       this._cacheDestWidth = destWidth;
       this._cacheDestHeight = destHeight;
 
-      var scale = $element.attr('data-scale'),
-          align = $element.attr('data-align'),
-
-          layout = this.innerFrameForSize(scale, align, sourceWidth, sourceHeight, destWidth, destHeight);
+      var layout = this.innerFrameForSize(scale, align, sourceWidth, sourceHeight, destWidth, destHeight);
 
       if (widthOffset) layout.x -= widthOffset/2;
       if (heightOffset) layout.y -= heightOffset/2;
