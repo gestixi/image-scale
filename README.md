@@ -1,7 +1,7 @@
-image-scale
+Image Scale
 ===========
 
-Scale images to fit or fill any target container via two simple properties: scale and align.
+**Scale images to fit or fill any target container via two simple properties: scale and align.**
 
 *This plugin is greatly inspired from Sproutcore SC.ImageView.*
 
