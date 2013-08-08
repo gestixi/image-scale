@@ -181,15 +181,18 @@
       @param {Boolean} firstTime
     */
     scale: function(firstTime) {
+      var that = this,   
+          $element = this.$element;
+
       if (window.requestAnimationFrame) {
-        var that = this;
         requestAnimationFrame(function() { that.scale(); });
       }
-      if (!this.needUpdate()) return;
+
+      if (!firstTime) {
+        if (!this.needUpdate() || !$element.is(":visible")) return;
+      }
 
       var options = this.options,
-
-          $element = this.$element,
           $parent = this.$parent,
 
           destWidth = $parent.outerWidth(), 
@@ -239,12 +242,12 @@
       $element.css({ position: 'absolute', top: layout.y+'px', left: layout.x+'px', width: layout.width+'px', height: layout.height+'px', 'max-width': 'none' });
 
       if (firstTime) {
+        if (options.hideParentOverflow) {
+          $parent.css({ overflow: 'hidden' });
+        }
+
         $element.css({ display: 'none', opacity: 1 });
         $element.fadeIn(options.fadeInDuration);
-      }
-
-      if (options.hideParentOverflow) {
-        $parent.css({ overflow: 'hidden' });
       }
     },
 
