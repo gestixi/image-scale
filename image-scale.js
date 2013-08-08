@@ -216,7 +216,7 @@
 
       if (this._cacheDestWidth === destWidth && this._cacheDestHeight === destHeight) {
         if (options.debug > 2) {
-          console.log("imageScale - DEBUG NOTICE: The parent size hasn't changed.", destWidth, destHeight);
+          console.log("imageScale - DEBUG NOTICE: The parent size hasn't changed: dest width: '"+destWidth+"' - dest height: '"+destHeight+"'.");
         }
       }
 
@@ -224,9 +224,7 @@
           sourceHeight = this.elementHeight;
           
       if (!(destWidth && destHeight && sourceWidth && sourceHeight)) {
-        if (options.debug > 0) {
-          console.error('imageScale - DEBUG ERROR: The dimensions are incorrect.', sourceWidth, sourceHeight, destWidth, destHeight);
-        }
+        console.error("imageScale - DEBUG ERROR: The dimensions are incorrect: source width: '"+sourceWidth+"' - source height: '"+sourceHeight+"' - dest width: '"+destWidth+"' - dest height: '"+destHeight+"'.");
         return;
       }
 
