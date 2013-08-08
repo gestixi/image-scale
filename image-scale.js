@@ -356,14 +356,20 @@
     needUpdate: function() {
       var size = $(window).height() + ' ' + $(window).width();
 
-      if (this.lastWindowSize !== size) {
-        this.lastWindowSize = size;
+      if (this._lastWindowSize !== size) {
+        this._lastWindowSize = size;
         return true;
       }
       return false;
     },
 
     /** @private */
-    lastWindowSize: null
+    _cacheDestWidth: null,
+
+    /** @private */
+    _cacheDestHeight: null,
+
+    /** @private */
+    _lastWindowSize: null
   }
 }(window.jQuery);
