@@ -129,7 +129,7 @@ You can also check out the Sproutcore [Automatic Image Scaling demo](http://show
 
 ## Size ##
 
-Original Size:  2.75KB gzipped (8.58KB uncompressed)
+Original Size:  2.81KB gzipped (8.8KB uncompressed)
 
-Compiled Size:  **1.39KB gzipped** (3.35KB uncompressed)
+Compiled Size:  **1.45KB gzipped** (3.52KB uncompressed)
 
