@@ -34,6 +34,12 @@
               }
 
               data.scale(true);
+
+              var callback = options.callback;
+              if (typeof callback === 'function') callback($this, data);
+              else if (callback && typeof callback === 'object') {
+                callback.target[callback.action].apply(callback.target, [$this, data]);
+              }
             };
 
         if (didLoad) {
@@ -124,6 +130,27 @@
       @since Version 1.0
     */
     rescaleOnResize: true,
+
+    /**
+      A function that will be call once the image has been load and scale. 
+
+      Must be either a function or an object. If an object, it must has a target (an object) 
+      and an action (the name of the method in the target) as property.
+
+      Here is an example:
+
+          $images.imageScale({ 
+            callback: {
+              target: this,
+              action: 'didScale'
+            }
+          });
+      
+      @type Function|Object
+      @default null
+      @since Version 1.3
+    */
+    callback: null,
 
     /**
       A number indicating the debug level :
