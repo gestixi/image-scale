@@ -145,6 +145,7 @@
 
   var ImageScale = function(element, options) { 
     this.options = options;
+    this.element = element;
     var $element = this.$element = $(element);
 
     this.elementWidth = $element.attr('width') || element.width;
@@ -184,33 +185,44 @@
       if (this._isDestroyed) return;
 
       var that = this,   
+          options = this.options,
+          $parent = this.$parent,
+          element = this.element,
           $element = this.$element;
 
-      if (window.requestAnimationFrame) {
-        requestAnimationFrame(function() { that.scale(); });
+      if (firstTime) {
+        if (options.hideParentOverflow) {
+          $parent.css({ overflow: 'hidden' });
+        }
+
+        $element.css({ opacity: 1 });
       }
 
-      if (!firstTime) {
-        if (!this.needUpdate() || !$element.is(":visible")) return;
+      if (options.rescaleOnResize) {
+        if (window.requestAnimationFrame) {
+          requestAnimationFrame(function() { that.scale(); });
+        }
+
+        if (!this.needUpdate()) return;
       }
+      
 
-      var options = this.options,
-          $parent = this.$parent,
-
-          destWidth = $parent.outerWidth(), 
+      var destWidth = $parent.outerWidth(), 
           destHeight = $parent.outerHeight(),
 
           destInnerWidth = $parent.innerWidth(), 
           destInnerHeight = $parent.innerHeight(),
 
           widthOffset = destWidth - destInnerWidth,
-          heightOffset = destHeight - destInnerHeight
+          heightOffset = destHeight - destInnerHeight,
 
           scaleData = $element.attr('data-scale'),
           alignData = $element.attr('data-align'),
 
           scale = scaleData?scaleData:options.scale,
-          align = alignData?alignData:options.align;
+          align = alignData?alignData:options.align,
+
+          fadeInDuration = options.fadeInDuration;
 
       if (!scale) {
         if (options.debug > 2) {
@@ -225,11 +237,13 @@
         }
       }
 
-      var sourceWidth = this.elementWidth, 
-          sourceHeight = this.elementHeight;
+      var sourceWidth = this.elementWidth = this.elementWidth || element.width, 
+          sourceHeight = this.elementHeight = this.elementHeight || element.height;
           
       if (!(destWidth && destHeight && sourceWidth && sourceHeight)) {
-        console.error("imageScale - DEBUG ERROR: The dimensions are incorrect: source width: '"+sourceWidth+"' - source height: '"+sourceHeight+"' - dest width: '"+destWidth+"' - dest height: '"+destHeight+"'.");
+        if (options.debug > 0) {
+          console.error("imageScale - DEBUG ERROR: The dimensions are incorrect: source width: '"+sourceWidth+"' - source height: '"+sourceHeight+"' - dest width: '"+destWidth+"' - dest height: '"+destHeight+"'.");
+        }
         return;
       }
 
@@ -243,13 +257,9 @@
 
       $element.css({ position: 'absolute', top: layout.y+'px', left: layout.x+'px', width: layout.width+'px', height: layout.height+'px', 'max-width': 'none' });
 
-      if (firstTime) {
-        if (options.hideParentOverflow) {
-          $parent.css({ overflow: 'hidden' });
-        }
-
-        $element.css({ display: 'none', opacity: 1 });
-        $element.fadeIn(options.fadeInDuration);
+      if (firstTime && fadeInDuration) {
+        $element.css({ display: 'none' });
+        $element.fadeIn(fadeInDuration);
       }
     },
 
