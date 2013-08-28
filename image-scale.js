@@ -44,7 +44,7 @@
         }
       }
       else {
-        data.scale();
+        if (typeof option == 'string') data[option]();
       }
     })
   }
@@ -181,6 +181,8 @@
       @param {Boolean} firstTime
     */
     scale: function(firstTime) {
+      if (this._isDestroyed) return;
+
       var that = this,   
           $element = this.$element;
 
@@ -249,6 +251,14 @@
         $element.css({ display: 'none', opacity: 1 });
         $element.fadeIn(options.fadeInDuration);
       }
+    },
+
+    /**
+      Removes the data for the element
+    */
+    destroy: function() {
+      this._isDestroyed = true;
+      this.$element.removeData('imageScale');
     },
 
     /**
