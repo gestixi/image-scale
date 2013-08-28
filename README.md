@@ -48,7 +48,6 @@ Determines how the image will scale to fit within its containing space. Possible
     Default: best-fill
 
 
-
 ####align####
 
 Align the image within its frame. Possible values:
@@ -77,12 +76,14 @@ If null, the parent of the image will be used.
     Type: jQuery Object
     Default: null
 
+
 ####hideParentOverflow####
 
 A boolean determining if the parent should hide its overflow.
 
     Type: Boolean
     Default: true
+
 
 ####fadeInDuration####
 
@@ -94,6 +95,7 @@ Set it to 0 if you don't want any animation.
     Type: Number or String
     Default: 0
 
+
 ####rescaleOnResize####
 
 A boolean indicating if the image size should be rescaled when the window is resized. 
@@ -102,6 +104,28 @@ The window size is checked using requestAnimationFrame for good performance.
 
     Type: Boolean
     Default: true
+  
+
+####callback####
+
+A function that will be call once the image has been load and scale. 
+
+Must be either a function or an object. If an object, it must has a target (an object) 
+and an action (the name of the method in the target) as property.
+
+Here is an example:
+
+    $images.imageScale({ 
+      callback: {
+        target: this,
+        action: 'didScale'
+      }
+    });
+
+<!-- -->
+
+    Type: Function or Object
+    Default: null
   
 
 ####debug####
@@ -116,6 +140,31 @@ A number indicating the debug level :
 
     Type: Number
     Default: 0
+
+
+##Methods##
+
+
+####scale####
+
+Main method. Used to scale the images.
+
+When `rescaleOnResize` is set to true, this method is executed each time the
+windows size changes.  
+
+If `rescaleOnResize` is set to false, you may want to call it manually. Here is an 
+example on how you should do it:
+
+    $image.imageScale('scale');
+
+
+####destroy####
+
+Removes the data for the element.
+
+Here is an example on how you can call the destroy method:
+
+    $image.imageScale('destroy');
 
 
 

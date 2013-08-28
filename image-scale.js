@@ -114,7 +114,7 @@
 
       Set it to 0 if you don't want any animation.
 
-      @type Number or String
+      @type Number|String
       @default 0
       @since Version 1.1
     */
@@ -204,8 +204,17 @@
     constructor: ImageScale,
 
     /**
-      Main method
+      Main method. Used to scale the images.
+
+      When `rescaleOnResize` is set to true, this method is executed each time the
+      windows size changes.  
       
+      If `rescaleOnResize` is set to false, you may want to call it manually. Here is an 
+      example on how you should do it:
+
+          $image.imageScale('scale');
+
+
       @param {Boolean} firstTime
     */
     scale: function(firstTime) {
@@ -230,7 +239,7 @@
           requestAnimationFrame(function() { that.scale(); });
         }
 
-        if (!this.needUpdate()) return;
+        if (!this._needUpdate()) return;
       }
       
 
@@ -277,7 +286,7 @@
       this._cacheDestWidth = destWidth;
       this._cacheDestHeight = destHeight;
 
-      var layout = this.innerFrameForSize(scale, align, sourceWidth, sourceHeight, destWidth, destHeight);
+      var layout = this._innerFrameForSize(scale, align, sourceWidth, sourceHeight, destWidth, destHeight);
 
       if (widthOffset) layout.x -= widthOffset/2;
       if (heightOffset) layout.y -= heightOffset/2;
@@ -291,7 +300,12 @@
     },
 
     /**
-      Removes the data for the element
+      Removes the data for the element.
+    
+      Here is an example on how you can call the destroy method:
+
+          $image.imageScale('destroy');
+
     */
     destroy: function() {
       this._isDestroyed = true;
@@ -310,7 +324,7 @@
       @param {Number} destHeight
       @returns {Object} the inner frame with properties: { x: value, y: value, width: value, height: value }
     */
-    innerFrameForSize: function(scale, align, sourceWidth, sourceHeight, destWidth, destHeight) {
+    _innerFrameForSize: function(scale, align, sourceWidth, sourceHeight, destWidth, destHeight) {
       var scaleX,
           scaleY,
           result;
@@ -399,11 +413,11 @@
     },
 
     /**
-      Determine if the windows size has changed since the last update.
+      Determines if the windows size has changed since the last update.
 
       @returns {Boolean}
     */
-    needUpdate: function() {
+    _needUpdate: function() {
       var size = $(window).height() + ' ' + $(window).width();
 
       if (this._lastWindowSize !== size) {
