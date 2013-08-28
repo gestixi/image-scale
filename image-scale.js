@@ -3,7 +3,7 @@
 // Description: Scale images to fit or fill any target size via two simple properties: scale and align.
 // Copyright:   ©2012-2013 Nicolas BADIA
 // License:     Licensed under the MIT license (see LICENCE)
-// Version:     1.2.1
+// Version:     1.3
 // ==========================================================================
 
 !function($) { "use strict";
