@@ -308,6 +308,8 @@
     },
 
     /**
+      @private
+      
       Returns a frame (x, y, width, height) fitting the source size (sourceWidth & sourceHeight) within the
       destination size (destWidth & destHeight) according to the align and scale properties.
       
@@ -408,6 +410,8 @@
     },
 
     /**
+      @private
+      
       Determines if the windows size has changed since the last update.
 
       @returns {Boolean}
@@ -423,6 +427,8 @@
     },
 
     /**
+      @private
+
       Schedule a scale update.
     */
     scheduleScale: function() {
