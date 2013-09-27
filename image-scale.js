@@ -28,9 +28,7 @@
               $this.data('imageScale', (data = new ImageScale(this, options)));
 
               if (options.rescaleOnResize) {
-                if (!window.requestAnimationFrame) {
-                  $(window).resize(function(e) { data.scale(); });
-                }
+                $(window).resize(function(e) { data.scheduleScale(); });
               }
 
               data.scale(true);
@@ -234,15 +232,12 @@
         $element.css({ opacity: 1 });
       }
 
-      if (options.rescaleOnResize) {
-        if (window.requestAnimationFrame) {
-          requestAnimationFrame(function() { that.scale(); });
-        }
+      this._didScheduleScale = false;
 
+      if (options.rescaleOnResize) {
         if (!this._needUpdate()) return;
       }
       
-
       var destWidth = $parent.outerWidth(), 
           destHeight = $parent.outerHeight(),
 
@@ -427,6 +422,22 @@
       return false;
     },
 
+    /**
+      Schedule a scale update.
+    */
+    scheduleScale: function() {
+      if (this._didScheduleScale) return; 
+
+      if (window.requestAnimationFrame) {
+        var that = this;
+        this._didScheduleScale = true;
+        requestAnimationFrame(function() { that.scale(); });
+      }
+      else {
+        this.scale();
+      }
+    },
+
     /** @private */
     _cacheDestWidth: null,
 
@@ -434,6 +445,9 @@
     _cacheDestHeight: null,
 
     /** @private */
-    _lastWindowSize: null
+    _lastWindowSize: null,
+
+    /** @private */
+    _didScheduleScale: null
   }
 }(window.jQuery);
