@@ -182,3 +182,15 @@ Original Size:  3.33KB gzipped (10.43KB uncompressed)
 
 Compiled Size:  **1.6KB gzipped** (3.94KB uncompressed)
 
+
+## Author ##
+
+**Nicolas Badia**
+
++ [https://twitter.com/@nicolas_badia](https://twitter.com/@nicolas_badia)
++ [https://github.com/nicolasbadia](https://github.com/nicolasbadia)
+
+
+## Copyright and license
+
+Copyright 2013 GestiXi under [The MIT License (MIT)](LICENSE).
