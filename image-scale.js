@@ -173,8 +173,8 @@
     this.element = element;
     var $element = this.$element = $(element);
 
-    this.elementWidth = $element.attr('width') || element.width;
-    this.elementHeight = $element.attr('height') || element.height;
+    this.elementWidth = element.naturalWidth || element.width;
+    this.elementHeight = element.naturalHeight || element.height;
 
     this.$parent = options.parent?options.parent:$($(element).parent()[0]);
   }
@@ -268,8 +268,8 @@
         }
       }
 
-      var sourceWidth = this.elementWidth = this.elementWidth || element.width, 
-          sourceHeight = this.elementHeight = this.elementHeight || element.height;
+      var sourceWidth = this.elementWidth, 
+          sourceHeight = this.elementHeight;
           
       if (!(destWidth && destHeight && sourceWidth && sourceHeight)) {
         if (options.debug > 0) {
