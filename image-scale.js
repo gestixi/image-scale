@@ -335,18 +335,7 @@
       scaleY = destHeight / sourceHeight;
 
       switch (scale) {
-        case this.BEST_FILL:
-          scale = scaleX > scaleY ? scaleX : scaleY;
-          break;
-        case this.BEST_FIT:
-          scale = scaleX < scaleY ? scaleX : scaleY;
-          break;
-        
-        case this.NONE:
-          scale = 1.0;
-          break;
-        //case this.BEST_FIT_DOWN_ONLY:
-        default:
+        case this.BEST_FIT_DOWN_ONLY:
           if (scale !== this.BEST_FIT_DOWN_ONLY && this.options.debug > 1) {
             console.warn("imageScale - DEBUG WARNING: The scale '"+scale+"' was not understood.");
           }
@@ -356,6 +345,16 @@
           } else {
             scale = 1.0;
           }
+          break;
+        case this.BEST_FIT:
+          scale = scaleX < scaleY ? scaleX : scaleY;
+          break;
+        case this.NONE:
+          scale = 1.0;
+          break;
+        //case this.BEST_FILL:
+        default:
+          scale = scaleX > scaleY ? scaleX : scaleY;
           break;
       }
 
