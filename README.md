@@ -5,12 +5,18 @@ Image Scale
 
 *This plugin is greatly inspired from Sproutcore SC.ImageView.*
 
-## Usage ##
+------
+
+## Installation
 
 image-scale depends on jQuery. To use it, include this in your page :
 
     <script src="jquery.js" type="text/javascript"></script>
     <script src="image-scale.js" type="text/javascript"></script>
+
+------
+
+## Usage
 
 If you want to identify the images that you want to scale, you can add a class to them. In this example we are adding a class call `scale`.
 
@@ -28,11 +34,12 @@ Now add this JavaScript code to your page :
 
 You're done.
 
+------
 
-##Properties##
+## Properties
 
 
-####scale####
+### scale
 
 Determines how the image will scale to fit within its containing space. Possible values:
 
@@ -48,7 +55,7 @@ Determines how the image will scale to fit within its containing space. Possible
     Default: best-fill
 
 
-####align####
+### align
 
 Align the image within its frame. Possible values:
 
@@ -68,7 +75,7 @@ Align the image within its frame. Possible values:
     Default: center
 
 
-####parent####
+### parent
 
 A jQuery Object against which the image size will be calculated.
 If null, the parent of the image will be used.
@@ -77,7 +84,7 @@ If null, the parent of the image will be used.
     Default: null
 
 
-####hideParentOverflow####
+### hideParentOverflow
 
 A boolean determining if the parent should hide its overflow.
 
@@ -85,7 +92,7 @@ A boolean determining if the parent should hide its overflow.
     Default: true
 
 
-####fadeInDuration####
+### fadeInDuration
 
 A duration in milliseconds determining how long the fadeIn animation 
 will run when your image is scale for the firstTime.
@@ -96,42 +103,38 @@ Set it to 0 if you don't want any animation.
     Default: 0
 
 
-####rescaleOnResize####
+### rescaleOnResize
 
 A boolean indicating if the image size should be rescaled when the window is resized. 
 
 The window size is checked using requestAnimationFrame for good performance.
 
     Type: Boolean
-    Default: true
+    Default: false
   
 
-####callback####
+### didScale
 
-A function that will be call once the image has been load and scale. 
+A function that will be call each time the receiver is scaled. 
 
-Must be either a function or an object. If an object, it must has a target (an object) 
-and an action (the name of the method in the target) as property.
-
-Here is an example:
+Example:
 
     $images.imageScale({ 
-      callback: {
-        target: this,
-        action: 'didScale'
+      didScale: function() {
+        console.log('did scale img: ', this.element);
       }
     });
 
 <!-- -->
 
-    Type: Function or Object
-    Default: null
+    Type: Function
   
 
-####debug####
+### debug
 
 A number indicating the debug level :
 
+0. silent
 1. error
 2. error & warning
 3. error & warning & notice
@@ -141,11 +144,12 @@ A number indicating the debug level :
     Type: Number
     Default: 0
 
+------
 
-##Methods##
+## Methods
 
 
-####scale####
+### scale
 
 Main method. Used to scale the images.
 
@@ -158,7 +162,7 @@ example on how you should do it:
     $image.imageScale('scale');
 
 
-####destroy####
+### destroy
 
 Removes the data for the element.
 
@@ -167,8 +171,9 @@ Here is an example on how you can call the destroy method:
     $image.imageScale('destroy');
 
 
+------
 
-## Demo ##
+## Demo
 
 See it in action on our [home page](https://www.gestixi.com).
 
@@ -176,14 +181,18 @@ See it in action on our [home page](https://www.gestixi.com).
 You can also check out the Sproutcore [Automatic Image Scaling demo](http://showcase.sproutcore.com/#demos/Automatic%20Image%20Scaling) to understand the difference between all the different options.
 
 
-## Size ##
+------
 
-Original Size:  3.5KB gzipped (12.72KB uncompressed)
+## Size
 
-Compiled Size:  **1.58KB gzipped** (3.86KB uncompressed)
+Original Size:  3.87KB gzipped (13.84KB uncompressed)
+
+Compiled Size:  **1.81KB gzipped** (4.42KB uncompressed)
 
 
-## Author ##
+------
+
+## Author
 
 **Nicolas Badia**
 
@@ -191,6 +200,8 @@ Compiled Size:  **1.58KB gzipped** (3.86KB uncompressed)
 + [https://github.com/nicolasbadia](https://github.com/nicolasbadia)
 
 
+------
+
 ## Copyright and license
 
-Copyright 2013 GestiXi under [The MIT License (MIT)](LICENSE).
+Copyright 2013-2015 GestiXi under [The MIT License (MIT)](LICENSE).
