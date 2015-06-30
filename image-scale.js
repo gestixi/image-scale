@@ -37,7 +37,7 @@
           loadFunc.apply($this[0]);
         }
         else {
-          $img.load(loadFunc);
+          $img.on("load", loadFunc).attr("src", $img.attr("src"));
         }
       }
       else {
