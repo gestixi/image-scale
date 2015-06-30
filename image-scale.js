@@ -122,7 +122,7 @@
       The window size is checked using requestAnimationFrame for good performance.
       
       @type Boolean
-      @default true
+      @default false
       @since Version 1.0
     */
     rescaleOnResize: false,
