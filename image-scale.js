@@ -22,8 +22,6 @@
         $img = this.tagName === 'IMG' ? $this : $this.find("img");
 
       if (!data) {
-        $this.css('opacity', 0);
-
         var didLoad = $img[0].complete,
             formattedOpt = $.extend({}, $.fn.imageScale.defaults, typeof options == 'object' && options),
 
@@ -254,8 +252,6 @@
         if (options.hideParentOverflow) {
           $parent.css({ overflow: 'hidden' });
         }
-
-        $element.css({ opacity: 1 });
       }
       else {
         // If the source of the image has changed
