@@ -3,7 +3,7 @@
 // Description: Scale images to fit or fill any target size via two simple properties: scale and align.
 // Copyright:   ©2012-2015 GestiXi
 // License:     Licensed under the MIT license (see LICENCE)
-// Version:     2.0
+// Version:     2.1
 // Author:      Nicolas BADIA
 // ==========================================================================
 
