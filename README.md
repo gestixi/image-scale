@@ -120,7 +120,7 @@ A function that will be call each time the receiver is scaled.
 Example:
 
     $images.imageScale({ 
-      didScale: function() {
+      didScale: function(firstTime, options) {
         console.log('did scale img: ', this.element);
       }
     });
@@ -128,6 +128,9 @@ Example:
 <!-- -->
 
     Type: Function
+    Parameters: 
+      - firstTime {Boolean} true if the image was scale for the first time.
+      - options {Object} the options passed to the scale method.
   
 
 ### debug

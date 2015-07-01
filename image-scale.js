@@ -137,9 +137,11 @@
           });
       
       @type Function
+      @param firstTime {Boolean} true if the image was scale for the first time.
+      @param options {Object} the options passed to the scale method.
       @since Version 2.0
     */
-    didScale: function() {},
+    didScale: function(firstTime, options) {},
 
     /**
       A number indicating the log level :
@@ -336,7 +338,7 @@
         $element.fadeIn(fadeInDuration);
       }
 
-      options.didScale.call(this);
+      options.didScale.call(this, firstTime, opt);
     },
 
     /**
