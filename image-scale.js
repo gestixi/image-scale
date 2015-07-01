@@ -22,8 +22,6 @@
         $img = this.tagName === 'IMG' ? $this : $this.find("img");
 
       if (!data) {
-        $this.css('opacity', 0);
-
         var didLoad = $img[0].complete,
             formattedOpt = $.extend({}, $.fn.imageScale.defaults, typeof options == 'object' && options),
 
@@ -37,7 +35,7 @@
           loadFunc.apply($this[0]);
         }
         else {
-          $img.load(loadFunc);
+          $img.on("load", loadFunc).attr("src", $img.attr("src"));
         }
       }
       else {
@@ -122,7 +120,7 @@
       The window size is checked using requestAnimationFrame for good performance.
       
       @type Boolean
-      @default true
+      @default false
       @since Version 1.0
     */
     rescaleOnResize: false,
@@ -139,9 +137,11 @@
           });
       
       @type Function
+      @param firstTime {Boolean} true if the image was scale for the first time.
+      @param options {Object} the options passed to the scale method.
       @since Version 2.0
     */
-    didScale: function() {},
+    didScale: function(firstTime, options) {},
 
     /**
       A number indicating the log level :
@@ -254,8 +254,6 @@
         if (options.hideParentOverflow) {
           $parent.css({ overflow: 'hidden' });
         }
-
-        $element.css({ opacity: 1 });
       }
       else {
         // If the source of the image has changed
@@ -340,7 +338,7 @@
         $element.fadeIn(fadeInDuration);
       }
 
-      options.didScale.call(this);
+      options.didScale.call(this, firstTime, opt);
     },
 
     /**
