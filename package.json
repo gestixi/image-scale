@@ -1,0 +1,28 @@
+{
+  "name": "image-scale",
+  "version": "2.1.0",
+  "description": "Scale images to fit or fill any target container via two simple properties: scale and align.",
+  "main": "image-scale.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gestixi/image-scale.git"
+  },
+  "keywords": [
+    "image",
+    "picture",
+    "resize",
+    "scale",
+    "fit",
+    "fill",
+    "align"
+  ],
+  "author": "GestiXi <nicolas@gestixi.com> (https://www.gestixi.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gestixi/image-scale/issues"
+  },
+  "homepage": "https://github.com/gestixi/image-scale#readme"
+}
