@@ -1,0 +1,27 @@
+{
+  "name": "image-scale",
+  "description": "Scale images to fit or fill any target container via two simple properties: scale and align.",
+  "main": "image-scale.js",
+  "authors": [
+    "GestiXi <nicolas@gestixi.com> (https://www.gestixi.com)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "image",
+    "picture",
+    "resize",
+    "scale",
+    "fit",
+    "fill",
+    "align"
+  ],
+  "homepage": "https://github.com/gestixi/image-scale",
+  "moduleType": [],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
