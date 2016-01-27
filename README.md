@@ -207,4 +207,4 @@ Compiled Size:  **1.8KB gzipped** (4.42KB uncompressed)
 
 ## Copyright and license
 
-Copyright 2013-2015 GestiXi under [The MIT License (MIT)](LICENSE).
+Copyright 2013-2016 GestiXi under [The MIT License (MIT)](LICENSE).
