@@ -1,6 +1,6 @@
 {
   "name": "image-scale",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Scale images to fit or fill any target container via two simple properties: scale and align.",
   "main": "image-scale.js",
   "scripts": {
