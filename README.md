@@ -109,6 +109,14 @@ A boolean indicating if the image size should be rescaled when the window is res
 
 The window size is checked using requestAnimationFrame for good performance.
 
+Example:
+
+    $images.imageScale({ 
+      rescaleOnResize: true
+    });
+
+<!-- -->
+
     Type: Boolean
     Default: false
   

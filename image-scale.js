@@ -118,6 +118,12 @@
       A boolean indicating if the image size should be rescaled when the window is resized. 
 
       The window size is checked using requestAnimationFrame for good performance.
+
+      Example:
+
+          $images.imageScale({ 
+            rescaleOnResize: true
+          });
       
       @type Boolean
       @default false
@@ -342,7 +348,7 @@
     },
 
     /**
-      Removes the data for the element.
+      Removes the data from the element.
     
       Here is an example on how you can call the destroy method:
 
