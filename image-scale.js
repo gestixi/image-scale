@@ -7,7 +7,38 @@
 // Author:      Nicolas BADIA
 // ==========================================================================
 
-!function($) { "use strict";
+// Uses CommonJS, AMD or browser globals to create a jQuery plugin.
+(function(factory) {
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define(['jquery'], factory);
+  } 
+  else if (typeof module === 'object' && module.exports) {
+    // Node/CommonJS
+    module.exports = function( root, jQuery ) {
+      if ( jQuery === undefined ) {
+        // require('jQuery') returns a factory that requires window to
+        // build a jQuery instance, we normalize how we use modules
+        // that require this pattern but the window provided is a noop
+        // if it's defined (how jquery works)
+        if (typeof window !== 'undefined') {
+          jQuery = require('jquery');
+        }
+        else {
+          jQuery = require('jquery')(root);
+        }
+      }
+      factory(jQuery);
+      return jQuery;
+    };
+  } 
+  else {
+    // Browser globals
+    factory(jQuery);
+  }
+}(function($) {
+
+  "use strict";
 
   // ..........................................................
   // IMAGE SCALE PLUGIN DEFINITION
@@ -115,7 +146,7 @@
     fadeInDuration: 0,
 
     /**
-      A boolean indicating if the image size should be rescaled when the window is resized. 
+      A boolean indicating if the image size should be rescaled when the window is resized.
 
       The window size is checked using requestAnimationFrame for good performance.
 
@@ -132,16 +163,16 @@
     rescaleOnResize: false,
 
     /**
-      A function that will be call each time the receiver is scaled. 
+      A function that will be call each time the receiver is scaled.
 
       Example:
 
-          $images.imageScale({ 
+          $images.imageScale({
             didScale: function() {
               console.log('did scale img: ', this.element);
             }
           });
-      
+
       @type Function
       @param firstTime {Boolean} true if the image was scale for the first time.
       @param options {Object} the options passed to the scale method.
@@ -151,12 +182,12 @@
 
     /**
       A number indicating the log level :
-      
+
       0: silent
       1: error
       2: error & warning
       3: error & warning & notice
-      
+
       @type Number
       @default 0
       @since Version 1.0
@@ -168,7 +199,7 @@
   // IMAGE SCALE PUBLIC CLASS DEFINITION
   //
 
-  var ImageScale = function(element, options) { 
+  var ImageScale = function(element, options) {
     var that = this;
     that.options = options;
     that.element = element;
@@ -204,7 +235,7 @@
     BEST_FILL: "best-fill",
     BEST_FIT: "best-fit",
     BEST_FIT_DOWN_ONLY: "best-fit-down",
-    
+
     ALIGN_LEFT: 'left',
     ALIGN_RIGHT: 'right',
     ALIGN_CENTER: 'center',
@@ -235,9 +266,9 @@
       Main method. Used to scale the images.
 
       When `rescaleOnResize` is set to true, this method is executed each time the
-      windows size changes.  
-      
-      If `rescaleOnResize` is set to false, you may want to call it manually. Here is an 
+      windows size changes.
+
+      If `rescaleOnResize` is set to false, you may want to call it manually. Here is an
       example on how you should do it:
 
           $image.imageScale('scale');
@@ -248,7 +279,7 @@
     scale: function(firstTime, opt) {
       if (this._isDestroyed || this._canScale === false) return;
 
-      var that = this,   
+      var that = this,
           options = this.options,
           $parent = this.$parent,
           element = this.element,
@@ -288,11 +319,11 @@
           $element.css('transition', 'null');
         }, transition);
       }
-      
-      var destWidth = opt.destWidth ? opt.destWidth : $parent.outerWidth(), 
+
+      var destWidth = opt.destWidth ? opt.destWidth : $parent.outerWidth(),
           destHeight = opt.destHeight ? opt.destHeight : $parent.outerHeight(),
 
-          destInnerWidth = opt.destWidth ? opt.destWidth : $parent.innerWidth(), 
+          destInnerWidth = opt.destWidth ? opt.destWidth : $parent.innerWidth(),
           destInnerHeight = opt.destHeight ? opt.destHeight : $parent.innerHeight(),
 
           widthOffset = destWidth - destInnerWidth,
@@ -319,9 +350,9 @@
         }
       }
 
-      var sourceWidth = this.imgWidth, 
+      var sourceWidth = this.imgWidth,
           sourceHeight = this.imgHeight;
-          
+
       if (!(destWidth && destHeight && sourceWidth && sourceHeight)) {
         if (options.logLevel > 0) {
           console.error("imageScale - DEBUG ERROR: The dimensions are incorrect: source width: '"+sourceWidth+"' - source height: '"+sourceHeight+"' - dest width: '"+destWidth+"' - dest height: '"+destHeight+"'.", element);
@@ -349,7 +380,7 @@
 
     /**
       Removes the data from the element.
-    
+
       Here is an example on how you can call the destroy method:
 
           $image.imageScale('destroy');
@@ -362,10 +393,10 @@
 
     /**
       @private
-      
+
       Returns a frame (x, y, width, height) fitting the source size (sourceWidth & sourceHeight) within the
       destination size (destWidth & destHeight) according to the align and scale properties.
-      
+
       @param {String} scale
       @param {String} align
       @param {Number} sourceWidth
@@ -392,7 +423,7 @@
           if (scale !== this.BEST_FIT_DOWN_ONLY && this.options.logLevel > 1) {
             console.warn("imageScale - DEBUG WARNING: The scale '"+scale+"' was not understood.");
           }
-        
+
           if ((sourceWidth > destWidth) || (sourceHeight > destHeight)) {
             scale = scaleX < scaleY ? scaleX : scaleY;
           } else {
@@ -484,7 +515,7 @@
       Schedule a scale update.
     */
     scheduleScale: function() {
-      if (this._didScheduleScale) return; 
+      if (this._didScheduleScale) return;
 
       if (window.requestAnimationFrame) {
         var that = this;
@@ -497,4 +528,5 @@
       }
     }
   }
-}(window.jQuery);
+
+}));
